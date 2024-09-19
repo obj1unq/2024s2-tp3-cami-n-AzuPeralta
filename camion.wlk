@@ -1,14 +1,23 @@
 import cosas.*
+import almacen.*
+
 
 object camion {
 	const property cosas = #{}
 		
 	method cargar(unaCosa) {
 		cosas.add(unaCosa)
+		unaCosa.cambiar()
 	}
 
 	method descargar(unaCosa) {
 	  cosas.remove(unaCosa)
+	}
+
+	method descargarCargaCompleta(destino) {
+	  destino.bajarCarga(cosas)
+	  cosas.clear()
+	  //o seria mejor cosas.map({cosa => self.descargar(cosa)}) ?
 	}
 
 	method todoPesoPar() {
@@ -63,7 +72,9 @@ object camion {
 	}
 
 	method totalBultos() {
-	  
+	  return cosas.map({cosa => cosa.bulto()}).sum()
 	}
+
+
 }
 

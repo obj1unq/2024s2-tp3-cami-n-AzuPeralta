@@ -1,18 +1,41 @@
+
 object knightRider {
-	method peso() { return 500 }
-	method nivelPeligrosidad() { return 10 }
+
+
+	method peso() { 
+    return 500 
+  }
+	method nivelPeligrosidad() { 
+    return 10 
+  }
+
+  method bulto() {
+    return 1
+  }
+
+    method cambiar() {
+    //Este objeto no cambia
+  }
 }
 
 object bumbleBee {
   
-  var property estadoActual = auto
+  var estado = auto
   
   method peso() {
 	return 800
   }
 
-  method nivelPeligrosidad(_estadoActual) {
-	return estadoActual.nivelPeligrosidad()
+  method nivelPeligrosidad(_estado) {
+	return estado.nivelPeligrosidad()
+  }
+
+    method bulto() {
+    return 2
+  }
+
+  method cambiar() {
+    estado = robot
   }
 }
 
@@ -40,18 +63,46 @@ object paqueteDeLadrillos {
   method nivelPeligrosidad() {
     return 2
   }
+
+    method bulto() {
+      return self.bultosSegunCantidad()
+  }
+
+  method bultosSegunCantidad() {
+    if (cantLadrillos.between(1, 100)){
+        return 1
+    }else if (cantLadrillos.between(101, 300)) {
+        return 2
+    }else{
+        return 3
+      }
+  }
+
+  method cambiar() {
+    cantLadrillos += 12
+  }
 }
 
 object arena {
-  var property peso = 0 
+  var peso = 0 
 
+  method peso() {
+    return peso
+  }
   method nivelPeligrosidad() {
     return 1
+  }
+    method bulto() {
+    return 1
+  }
+
+  method cambiar() {
+    peso += 20
   }
 }
 
 object bateriaAntiaerea {
-  var estado = bateriaConMisil 
+  var estado = bateriaConOtro 
 
   method estado(_estado) {
     estado = _estado
@@ -65,6 +116,13 @@ object bateriaAntiaerea {
     return estado.nivelPeligrosidad()
   }
 
+    method bulto() {
+    return estado.bulto()
+  }
+
+  method cambiar() {
+    estado = bateriaConMisil
+  }
 }
 
 object bateriaConMisil {
@@ -76,6 +134,9 @@ object bateriaConMisil {
   method nivelPeligrosidad() {
     return 100
   }
+    method bulto() {
+    return 2
+  }
 }
 
 object bateriaConOtro {
@@ -85,6 +146,9 @@ object bateriaConOtro {
 
   method nivelPeligrosidad() {
     return 0
+  }
+    method bulto() {
+    return 1
   }
 }
 
@@ -107,14 +171,34 @@ object contenedorPortuario {
   method agregarCosa(cosa) {
     cosas.add(cosa)
   }
+
+  method bulto() {
+     return 1 + cosas.map({cosa => cosa.bulto()}) 
+  }
+
+  method cambiar() {
+    cosas.map({cosa => cosa.cambiar()})
+  }
+
 }
 
 object residuosRadiactivos {
   
-  var property peso = 0
+  var peso = 0
+
+  method peso() {
+    return peso
+  }
 
   method nivelPeligrosidad() {
     return 200
+  }
+    method bulto() {
+    return 1
+  }
+
+  method cambiar() {
+    peso += 15
   }
 }
 
@@ -127,6 +211,14 @@ object embalajeSeguridad {
 
   method nivelPeligrosidad() {
     return envuelveA.nivelPeligrosidad() / 2
+  }
+
+    method bulto() {
+    return 2
+  }
+
+  method cambiar() {
+    //No hace nada. 
   }
 
 }
