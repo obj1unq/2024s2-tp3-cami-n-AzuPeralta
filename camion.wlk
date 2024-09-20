@@ -97,7 +97,7 @@ object camion {
 	}
 
 	/*
-	COMO LO HICE YO:
+	COMO LO HICE YO: No tengo una 
 
 	method transportar(destino, camino){
 		self.validarTransportar(destino, camino)
