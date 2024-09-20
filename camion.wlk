@@ -1,9 +1,12 @@
 import cosas.*
 import almacen.*
+import rutas.*
+
 
 
 object camion {
 	const property cosas = #{}
+	var property ruta = ruta9 
 		
 	method cargar(unaCosa) {
 		cosas.add(unaCosa)
@@ -58,6 +61,16 @@ object camion {
 	method puedeCircularEnRuta(nivelMaximoPeligrosidad) {
 	  return not self.excedidoDePeso() and self.objetosQueSuperanPeligrosidad(nivelMaximoPeligrosidad).count(0)
 	}
+//REVISAR
+	method validarRuta(_ruta) {
+	  if (self.puedeCircularEnRuta(_ruta.nivelPeligrosidad()) 
+	  or self.pesoTotal() < _ruta.pesoSoportado()){
+		ruta = _ruta
+	  }else{
+		self.error("Este camion no puede circular por este camino!")
+	  }
+
+	}
 
 	method tieneAlgoQuePesaEntre(min, max) {
 	  return cosas.any({cosa => (cosa.peso() > min) and (cosa.peso() < max)})
@@ -75,6 +88,11 @@ object camion {
 	  return cosas.map({cosa => cosa.bulto()}).sum()
 	}
 
+	method transportar(destino, camino) {
+	  self.validarRuta(camino)
+	  self.ruta(camino)
+	  self.descargarCargaCompleta(destino)
+	}
 
 }
 

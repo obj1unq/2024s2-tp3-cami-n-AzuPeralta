@@ -20,13 +20,13 @@ object knightRider {
 
 object bumbleBee {
   
-  var estado = auto
+  var property estado = auto
   
   method peso() {
 	return 800
   }
 
-  method nivelPeligrosidad(_estado) {
+  method nivelPeligrosidad() {
 	return estado.nivelPeligrosidad()
   }
 
@@ -84,11 +84,8 @@ object paqueteDeLadrillos {
 }
 
 object arena {
-  var peso = 0 
+  var property peso = 0 
 
-  method peso() {
-    return peso
-  }
   method nivelPeligrosidad() {
     return 1
   }
@@ -102,11 +99,9 @@ object arena {
 }
 
 object bateriaAntiaerea {
-  var estado = bateriaConOtro 
+  var property estado = bateriaConOtro 
 
-  method estado(_estado) {
-    estado = _estado
-  }
+
 
   method peso() {
     return estado.peso()
@@ -154,7 +149,7 @@ object bateriaConOtro {
 
 object contenedorPortuario {
 
-  const cosas = []
+  const property cosas = #{}
   
   method peso() {
     return 100 + cosas.sum({cosa => cosa.peso()})
@@ -184,11 +179,9 @@ object contenedorPortuario {
 
 object residuosRadiactivos {
   
-  var peso = 0
+  var property peso = 0
 
-  method peso() {
-    return peso
-  }
+
 
   method nivelPeligrosidad() {
     return 200
