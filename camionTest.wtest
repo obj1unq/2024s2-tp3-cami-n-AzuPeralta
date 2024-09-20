@@ -14,7 +14,7 @@ describe "El camión" {
         camion.cargar(bateriaAntiaerea)
     }
   test "Se prueba la funcionalidad del objeto camion" {
-    
+    //Faltaria dividir un poco este bloque?
     assert.notThat(camion.cosas().isEmpty()) 
     assert.equals(#{knightRider,bumbleBee,bateriaAntiaerea}, camion.cosas())
     assert.that(camion.todoPesoPar())
@@ -155,3 +155,21 @@ describe "Las cosas" {
   }
 }
 
+describe "Transporte" {
+
+    //Inicializa la carga del camion para las pruebas
+    method initialize() {
+        embalajeSeguridad.envuelveA(knightRider)
+        camion.cargar(embalajeSeguridad)
+        camion.cargar(bumbleBee)
+        camion.cargar(bateriaAntiaerea)
+        camion.cargar(paqueteDeLadrillos)
+
+    }
+  test "El camión excede el peso y el almacen está lleno" {
+    assert.that(camion.excedidoDePeso())
+    assert.equals(7, camion.totalBultos())
+    assert.throwsException({camion.transportar(almacen, ruta9)})
+
+  }
+}
