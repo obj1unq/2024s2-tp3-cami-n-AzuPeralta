@@ -97,7 +97,7 @@ object camion {
 	}
 
 	/*
-	COMO LO HICE YO: No tengo una 
+	COMO LO HICE YO: No tengo una variable ruta, xq no me interesa guardarme esa informacion. Es momentanea para llevar al almacen las cosas
 
 	method transportar(destino, camino){
 		self.validarTransportar(destino, camino)
