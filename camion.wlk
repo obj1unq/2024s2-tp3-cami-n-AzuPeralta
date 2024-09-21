@@ -6,7 +6,6 @@ import rutas.*
 
 object camion {
 	const property cosas = #{}
-	var property ruta = ruta9 
 		
 	method cargar(unaCosa) {
 		cosas.add(unaCosa)
@@ -62,18 +61,6 @@ object camion {
 	  return not self.excedidoDePeso() and self.objetosQueSuperanPeligrosidad(nivelMaximoPeligrosidad).count(0)
 	}
 
-//PREGUNTA: Yo en esta comparación lo que quiero es preguntar 
-//con un OR, no con un and. Pero cuando uso OR se me rompe y me dice undefined.
-	method validarRuta(_ruta) {
-	  if (self.puedeCircularEnRuta(_ruta.nivelPeligrosidad()) 
-	  and self.pesoTotal() < _ruta.pesoSoportado()){
-		ruta = _ruta  //xq haces esto??
-	  }else{
-		self.error("Este camion no puede circular por este camino!")
-	  }
-
-	}
-
 	method tieneAlgoQuePesaEntre(min, max) {
 	  return cosas.any({cosa => (cosa.peso() > min) and (cosa.peso() < max)})
 	}
@@ -90,41 +77,35 @@ object camion {
 	  return cosas.map({cosa => cosa.bulto()}).sum()
 	}
 
+	method validarViaje(destino, camino) {
+	  self.validarPeso()
+	  self.validarCamino(camino)
+	  self.validarDestino(destino)
+
+	}
+
+	method validarDestino(destino) {
+	  return destino.haySuficienteCapacidad(cosas)
+	}
+
+	method validarCamino(camino) {
+	  if(not self.puedeCircularPor(camino)) self.error("El camion no puede circular por " + camino + " ya que no cumple las condiciones.")
+	}
+
+	method puedeCircularPor(camino) {
+	  return 
+	  self.objetosQueSuperanPeligrosidad(camino.nivelPeligrosidad()) and 
+	  self.pesoTotal() < camino.pesoSoportado()
+
+	}
+
+	method validarPeso() {
+	  if (self.excedidoDePeso()) self.error("Excede el peso permitido! No puede circular.")
+
+	}
 	method transportar(destino, camino) {
-	  self.validarRuta(camino)
-	  self.ruta(camino)
+	  self.validarViaje(destino, camino)
 	  self.descargarCargaCompleta(destino)
 	}
-
-	/*
-	COMO LO HICE YO: No tengo una variable ruta, xq no me interesa guardarme esa informacion. Es momentanea para llevar al almacen las cosas
-
-	method transportar(destino, camino){
-		self.validarTransportar(destino, camino)
-		self.llegadaADestino(destino)
-	}
-	
-	method validarTransportar(destino, camino){
-		self.verificaPeso()
-		self.verificaHayEspacioEnAlmacen(destino)
-		self.verificarCamino(camino)
-	}
-	method verificaPeso(){
-		if(self.excedidoDePeso()){
-			self.error("No puede transportar a destino porque está excedido de peso")
-		}
-	}
-	method verificaHayEspacioEnAlmacen(destino){
-		if(destino.espacioDisponibleBultos() < self.totalBultos()){
-			self.error("No puede transportar a destino porque no hay espacio en " + destino)
-		}
-	}
-	method verificarCamino(camino){
-		if(camino.puedeCircular(self)){
-			self.error("El camino no es apto para el transporte")
-		}
-	}
-	*/
-
 }
 

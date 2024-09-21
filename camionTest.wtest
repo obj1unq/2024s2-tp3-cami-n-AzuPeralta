@@ -170,6 +170,6 @@ describe "Transporte" {
     assert.that(camion.excedidoDePeso())
     assert.equals(7, camion.totalBultos())
     assert.throwsException({camion.transportar(almacen, ruta9)})
-
   }
+  //Me falta agregar pruebas!!!! 
 }
