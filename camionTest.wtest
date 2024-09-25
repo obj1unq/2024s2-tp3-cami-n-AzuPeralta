@@ -6,7 +6,7 @@ import rutas.*
 
 
 describe "El camión" {
-
+const camion = new Camion()
     //Inicializa la carga del camion para las pruebas
     method initialize() {
         camion.cargar(knightRider)

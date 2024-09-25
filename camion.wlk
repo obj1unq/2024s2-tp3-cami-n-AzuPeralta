@@ -4,7 +4,7 @@ import rutas.*
 
 
 
-object camion {
+class Camion {
 	const property cosas = #{}
 		
 	method cargar(unaCosa) {
@@ -19,7 +19,6 @@ object camion {
 	method descargarCargaCompleta(destino) {
 	  destino.bajarCarga(cosas)
 	  cosas.clear()
-	  //o seria mejor cosas.map({cosa => self.descargar(cosa)}) ?
 	}
 
 	method todoPesoPar() {
@@ -61,6 +60,7 @@ object camion {
 	  return not self.excedidoDePeso() and self.objetosQueSuperanPeligrosidad(nivelMaximoPeligrosidad).count(0)
 	}
 
+	//USAR BETWEEN
 	method tieneAlgoQuePesaEntre(min, max) {
 	  return cosas.any({cosa => (cosa.peso() > min) and (cosa.peso() < max)})
 	}
@@ -84,6 +84,7 @@ object camion {
 
 	}
 
+	//DELEGAR VALIDACION A CADA OBJETO
 	method validarDestino(destino) {
 	  return destino.haySuficienteCapacidad(cosas)
 	}
@@ -103,9 +104,15 @@ object camion {
 	  if (self.excedidoDePeso()) self.error("Excede el peso permitido! No puede circular.")
 
 	}
+
+	//Modificar validaciones, delegar a cada objeto la que sea responsabilidad suya
+	//Y pasar el camion, para poder tener los metodos del camion disponibles y poder reutilizarlos.
 	method transportar(destino, camino) {
 	  self.validarViaje(destino, camino)
 	  self.descargarCargaCompleta(destino)
 	}
 }
 
+
+//INSTANCIA DE CLASE CAMION
+//const camion = new Camion()
